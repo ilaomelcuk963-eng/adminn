@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Админ-панель | DevPortfolio</title>
+    <title>DevPortfolio | Программист</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -33,8 +33,40 @@
             line-height: 1.6;
         }
 
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px var(--primary); }
+            50% { box-shadow: 0 0 20px var(--primary), 0 0 30px rgba(99, 102, 241, 0.3); }
+        }
+
+
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -43,6 +75,9 @@
             padding: 1.5rem 0;
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
             border-bottom: 1px solid rgba(99, 102, 241, 0.2);
         }
 
@@ -61,178 +96,268 @@
             color: transparent;
         }
 
-        .admin-nav {
+        nav ul {
             display: flex;
-            gap: 1rem;
+            list-style: none;
+            gap: 2rem;
         }
 
-        .admin-nav a {
+        nav a {
             color: var(--light);
             text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+            font-weight: 500;
             transition: all 0.3s ease;
-        }
-
-        .admin-nav a:hover, .admin-nav a.active {
-            background: rgba(99, 102, 241, 0.2);
-            color: var(--primary);
-        }
-
-        .admin-container {
-            display: flex;
-            min-height: calc(100vh - 80px);
-        }
-
-        .sidebar {
-            width: 250px;
-            background: rgba(15, 23, 42, 0.7);
-            padding: 2rem 1rem;
-            border-right: 1px solid rgba(99, 102, 241, 0.2);
-        }
-
-        .sidebar ul {
-            list-style: none;
-        }
-
-        .sidebar li {
-            margin-bottom: 0.5rem;
-        }
-
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            color: var(--gray-light);
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar a:hover, .sidebar a.active {
-            background: rgba(99, 102, 241, 0.2);
-            color: var(--primary);
-        }
-
-        .sidebar i {
-            width: 20px;
-            text-align: center;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 2rem;
-        }
-
-        .section-title {
-            margin-bottom: 2rem;
-            font-size: 1.8rem;
             position: relative;
-            display: inline-block;
         }
 
-        .section-title::after {
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a::after {
             content: '';
             position: absolute;
-            bottom: -8px;
+            bottom: -5px;
             left: 0;
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 2px;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+        nav a:hover::after {
+            width: 100%;
         }
 
-        .stat-card {
-            background: rgba(15, 23, 42, 0.7);
-            border-radius: 10px;
-            padding: 1.5rem;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            transition: all 0.3s ease;
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .stat-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px);
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
         }
 
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: slideInLeft 1s ease;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        .stat-label {
-            color: var(--gray-light);
-            font-size: 0.9rem;
-        }
-
-        .table-container {
-            background: rgba(15, 23, 42, 0.7);
-            border-radius: 10px;
-            padding: 1.5rem;
-            border: 1px solid rgba(99, 102, 241, 0.2);
+        .hero p {
+            font-size: 1.25rem;
             margin-bottom: 2rem;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
-        }
-
-        th {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        td {
             color: var(--gray-light);
+            animation: slideInRight 1s ease;
         }
 
         .btn {
             display: inline-block;
-            padding: 0.5rem 1rem;
+            padding: 0.8rem 2rem;
             background: linear-gradient(90deg, var(--primary), var(--primary-dark));
             color: white;
             border: none;
-            border-radius: 6px;
-            font-weight: 500;
+            border-radius: 8px;
+            font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
-            cursor: pointer;
-            font-size: 0.9rem;
+            box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.4);
+            animation: pulse 2s infinite;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-danger {
-            background: linear-gradient(90deg, #ef4444, #dc2626);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+            animation: none;
         }
 
         .btn-secondary {
             background: transparent;
             border: 1px solid var(--primary);
+            margin-left: 1rem;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.1);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            right: 5%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 10%;
+            right: 25%;
+            animation-delay: 4s;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            animation: fadeIn 1s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            animation: glow 2s infinite;
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .skill-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-card p {
+            color: var(--gray-light);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            animation: glow 2s infinite;
+        }
+
+        .project-img {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-content p {
+            color: var(--gray-light);
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tag {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .comments-section {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .comment-form {
+            margin-bottom: 2rem;
         }
 
         .form-group {
@@ -243,48 +368,126 @@
             display: block;
             margin-bottom: 0.5rem;
             color: var(--gray-light);
-            font-weight: 500;
         }
 
         .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group textarea {
             width: 100%;
             padding: 0.8rem;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 6px;
+            border-radius: 8px;
             color: white;
             transition: all 0.3s ease;
         }
 
         .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
         }
 
-        .form-row {
+        .comments-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .comment {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .comment-header {
             display: flex;
-            gap: 1rem;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
         }
 
-        .form-row .form-group {
-            flex: 1;
+        .comment-author {
+            font-weight: 600;
+            color: var(--primary);
         }
 
-        .tab-content {
-            display: none;
+        .comment-date {
+            color: var(--gray);
+            font-size: 0.9rem;
         }
 
-        .tab-content.active {
-            display: block;
+        .comment-text {
+            color: var(--gray-light);
         }
 
-        .message-unread {
-            background: rgba(99, 102, 241, 0.1);
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-info {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--primary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(15, 23, 42, 0.8);
+            border-top: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-5px);
         }
 
         .notification {
@@ -313,38 +516,31 @@
             transform: translateX(0);
         }
 
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--primary);
-            text-decoration: none;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
         }
 
-        .back-link:hover {
-            gap: 0.75rem;
-        }
-
-        .skill-item, .project-item {
-            background: rgba(15, 23, 42, 0.5);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-        }
-
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .item-actions {
-            display: flex;
-            gap: 0.5rem;
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -352,813 +548,334 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">DevPortfolio Admin</div>
-                <div class="admin-nav">
-                    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> На сайт</a>
-                </div>
+                <div class="logo">DevPortfolio</div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#skills">Навыки</a></li>
+                        <li><a href="#projects">Проекты</a></li>
+                        <li><a href="#comments">Отзывы</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <div class="admin-container">
-        <div class="sidebar">
-            <ul>
-                <li><a href="#" class="active" data-tab="dashboard"><i class="fas fa-tachometer-alt"></i> Дашборд</a></li>
-                <li><a href="#" data-tab="messages"><i class="fas fa-envelope"></i> Сообщения <span id="unread-count" class="badge"></span></a></li>
-                <li><a href="#" data-tab="comments"><i class="fas fa-comments"></i> Комментарии</a></li>
-                <li><a href="#" data-tab="hero"><i class="fas fa-user"></i> Герой-секция</a></li>
-                <li><a href="#" data-tab="skills"><i class="fas fa-cogs"></i> Навыки</a></li>
-                <li><a href="#" data-tab="projects"><i class="fas fa-project-diagram"></i> Проекты</a></li>
-                <li><a href="#" data-tab="contact"><i class="fas fa-address-book"></i> Контакты</a></li>
-                <li><a href="#" data-tab="social"><i class="fas fa-share-alt"></i> Соцсети</a></li>
-            </ul>
+    <section id="home" class="hero">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
         </div>
-
-        <div class="main-content">
-            <!-- Дашборд -->
-            <div id="dashboard" class="tab-content active">
-                <h2 class="section-title">Дашборд</h2>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="messages-count">0</div>
-                        <div class="stat-label">Сообщений</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="comments-count">0</div>
-                        <div class="stat-label">Комментариев</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="unread-count-dash">0</div>
-                        <div class="stat-label">Непрочитанных</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="skills-count">0</div>
-                        <div class="stat-label">Навыков</div>
-                    </div>
-                </div>
-
-                <div class="table-container">
-                    <h3>Последние сообщения</h3>
-                    <table id="recent-messages">
-                        <thead>
-                            <tr>
-                                <th>Имя</th>
-                                <th>Email</th>
-                                <th>Дата</th>
-                                <th>Действия</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Сообщения будут загружаться здесь -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="table-container">
-                    <h3>Последние комментарии</h3>
-                    <table id="recent-comments">
-                        <thead>
-                            <tr>
-                                <th>Имя</th>
-                                <th>Комментарий</th>
-                                <th>Дата</th>
-                                <th>Действия</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Комментарии будут загружаться здесь -->
-                        </tbody>
-                    </table>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Привет, я <span>Илья</span>,<br>Full-stack разработчик</h1>
+                <p>Создаю современные веб-приложения и цифровые решения. Специализируюсь на JavaScript, Python и облачных технологиях.</p>
+                <div>
+                    <a href="#projects" class="btn">Мои проекты</a>
+                    <a href="#contact" class="btn btn-secondary">Связаться</a>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Сообщения -->
-            <div id="messages" class="tab-content">
-                <h2 class="section-title">Сообщения</h2>
-                <div class="table-container">
-                    <table id="messages-table">
-                        <thead>
-                            <tr>
-                                <th>Имя</th>
-                                <th>Email</th>
-                                <th>Сообщение</th>
-                                <th>Дата</th>
-                                <th>Действия</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Сообщения будут загружаться здесь -->
-                        </tbody>
-                    </table>
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Мои навыки</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <h3>Python & Django</h3>
+                    <p>Разработка бэкенд-приложений, API, веб-скрапинг, анализ данных и машинное обучение. Опыт работы с Django, Flask, FastAPI.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fab fa-js-square"></i>
+                    </div>
+                    <h3>JavaScript & React</h3>
+                    <p>Создание интерактивных пользовательских интерфейсов. Опыт работы с React, Vue, Node.js и современными инструментами сборки.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Базы данных</h3>
+                    <p>Проектирование и оптимизация реляционных и нереляционных БД. Опыт работы с PostgreSQL, MySQL, MongoDB и Redis.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Облачные технологии</h3>
+                    <p>Развертывание и управление приложениями в облаке. Опыт работы с AWS, Docker, Kubernetes и CI/CD пайплайнами.</p>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Комментарии -->
-            <div id="comments" class="tab-content">
-                <h2 class="section-title">Комментарии</h2>
-                <div class="table-container">
-                    <table id="comments-table">
-                        <thead>
-                            <tr>
-                                <th>Имя</th>
-                                <th>Комментарий</th>
-                                <th>Дата</th>
-                                <th>Действия</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Комментарии будут загружаться здесь -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Герой-секция -->
-            <div id="hero" class="tab-content">
-                <h2 class="section-title">Герой-секция</h2>
-                <div class="table-container">
-                    <form id="hero-form">
-                        <div class="form-group">
-                            <label for="hero-name">Имя</label>
-                            <input type="text" id="hero-name" required>
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Мои проекты</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Аналитическая платформа</h3>
+                        <p>Система для анализа больших объемов данных с интерактивной визуализацией и прогнозированием.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Django</span>
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">D3.js</span>
                         </div>
-                        <div class="form-group">
-                            <label for="hero-profession">Профессия</label>
-                            <input type="text" id="hero-profession" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="hero-description">Описание</label>
-                            <textarea id="hero-description" rows="4" required></textarea>
-                        </div>
-                        <button type="submit" class="btn">Сохранить изменения</button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Навыки -->
-            <div id="skills" class="tab-content">
-                <h2 class="section-title">Навыки</h2>
-                <div class="table-container">
-                    <button id="add-skill" class="btn" style="margin-bottom: 1rem;">Добавить навык</button>
-                    <div id="skills-list">
-                        <!-- Навыки будут загружаться здесь -->
+                        <a href="#" class="btn">Подробнее</a>
                     </div>
                 </div>
-            </div>
-
-            <!-- Проекты -->
-            <div id="projects" class="tab-content">
-                <h2 class="section-title">Проекты</h2>
-                <div class="table-container">
-                    <button id="add-project" class="btn" style="margin-bottom: 1rem;">Добавить проект</button>
-                    <div id="projects-list">
-                        <!-- Проекты будут загружаться здесь -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Умный чат-бот</h3>
+                        <p>AI-помощник для автоматизации поддержки клиентов с интеграцией в популярные мессенджеры.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">NLP</span>
+                            <span class="project-tag">Telegram API</span>
+                            <span class="project-tag">TensorFlow</span>
+                        </div>
+                        <a href="#" class="btn">Подробнее</a>
                     </div>
                 </div>
-            </div>
-
-            <!-- Контакты -->
-            <div id="contact" class="tab-content">
-                <h2 class="section-title">Контактная информация</h2>
-                <div class="table-container">
-                    <form id="contact-form">
-                        <div class="form-group">
-                            <label for="contact-email">Email</label>
-                            <input type="email" id="contact-email" required>
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>E-commerce платформа</h3>
+                        <p>Полнофункциональный маркетплейс с системой управления заказами, платежами и аналитикой.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">Node.js</span>
+                            <span class="project-tag">MongoDB</span>
+                            <span class="project-tag">Stripe API</span>
                         </div>
-                        <div class="form-group">
-                            <label for="contact-phone">Телефон</label>
-                            <input type="text" id="contact-phone" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-address">Адрес</label>
-                            <input type="text" id="contact-address" required>
-                        </div>
-                        <button type="submit" class="btn">Сохранить изменения</button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Соцсети -->
-            <div id="social" class="tab-content">
-                <h2 class="section-title">Социальные сети</h2>
-                <div class="table-container">
-                    <button id="add-social" class="btn" style="margin-bottom: 1rem;">Добавить соцсеть</button>
-                    <div id="social-list">
-                        <!-- Соцсети будут загружаться здесь -->
+                        <a href="#" class="btn">Подробнее</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Уведомление о статусе -->
+    <section id="comments">
+        <div class="container">
+            <h2 class="section-title">Отзывы и комментарии</h2>
+            <div class="comments-section">
+                <div class="comment-form">
+                    <h3>Оставьте ваш отзыв</h3>
+                    <form id="commentForm">
+                        <div class="form-group">
+                            <label for="commentName">Ваше имя</label>
+                            <input type="text" id="commentName" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="commentText">Ваш комментарий</label>
+                            <textarea id="commentText" name="text" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Отправить отзыв</button>
+                    </form>
+                </div>
+                <div class="comments-list" id="commentsList">
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Связи</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Контактная информация</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                          
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <p>Телефон</p>
+                            <p>+375 29 884 58 37</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <p>Адрес</p>
+                            <p>брест</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Отправить сообщение</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Имя</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Сообщение</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; сделал илья</p>
+        </div>
+    </footer>
+
     <div id="notification" class="notification"></div>
 
     <script>
-        // Загрузка данных
-        function loadAdminData() {
-            const siteData = JSON.parse(localStorage.getItem('portfolioSiteData')) || getDefaultSiteData();
-            const messages = JSON.parse(localStorage.getItem('portfolioMessages')) || [];
-            const comments = JSON.parse(localStorage.getItem('portfolioComments')) || [];
+        document.querySelectorAll('nav a, .btn[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+  
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = `fadeIn 1s ease forwards`;
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.skill-card, .project-card').forEach(el => {
+            observer.observe(el);
+        });
+
+
+        let comments = JSON.parse(localStorage.getItem('portfolioComments')) || [];
+        
+        function displayComments() {
+            const commentsList = document.getElementById('commentsList');
+            commentsList.innerHTML = '';
             
-            // Обновляем статистику
-            document.getElementById('messages-count').textContent = messages.length;
-            document.getElementById('comments-count').textContent = comments.length;
-            document.getElementById('unread-count-dash').textContent = messages.filter(m => !m.read).length;
-            document.getElementById('skills-count').textContent = siteData.skills.length;
-            
-            // Обновляем счетчик непрочитанных в меню
-            const unreadCount = messages.filter(m => !m.read).length;
-            const badge = document.getElementById('unread-count');
-            if (unreadCount > 0) {
-                badge.textContent = unreadCount;
-                badge.style.display = 'inline-block';
-                badge.style.background = 'var(--accent)';
-                badge.style.color = 'white';
-                badge.style.borderRadius = '10px';
-                badge.style.padding = '2px 6px';
-                badge.style.fontSize = '0.7rem';
-                badge.style.marginLeft = '5px';
-            } else {
-                badge.style.display = 'none';
+            if (comments.length === 0) {
+                commentsList.innerHTML = '<p>Пока нет комментариев.</p>';
+                return;
             }
-            
-            // Загружаем последние сообщения
-            loadRecentMessages(messages);
-            
-            // Загружаем последние комментарии
-            loadRecentComments(comments);
-            
-            // Загружаем все сообщения
-            loadAllMessages(messages);
-            
-            // Загружаем все комментарии
-            loadAllComments(comments);
-            
-            // Загружаем данные для редактирования
-            loadHeroData(siteData.hero);
-            loadContactData(siteData.contact);
-            loadSkillsData(siteData.skills);
-            loadProjectsData(siteData.projects);
-            loadSocialData(siteData.social);
-        }
-        
-        function getDefaultSiteData() {
-            return {
-                hero: {
-                    name: 'Алексей',
-                    profession: 'Full-stack разработчик',
-                    description: 'Создаю современные веб-приложения и цифровые решения. Специализируюсь на JavaScript, Python и облачных технологиях.'
-                },
-                contact: {
-                    email: 'alex.dev@example.com',
-                    phone: '+7 (999) 123-45-67',
-                    address: 'Москва, Россия'
-                },
-                skills: [
-                    {
-                        id: 1,
-                        icon: 'fab fa-python',
-                        title: 'Python & Django',
-                        description: 'Разработка бэкенд-приложений, API, веб-скрапинг, анализ данных и машинное обучение. Опыт работы с Django, Flask, FastAPI.'
-                    },
-                    {
-                        id: 2,
-                        icon: 'fab fa-js-square',
-                        title: 'JavaScript & React',
-                        description: 'Создание интерактивных пользовательских интерфейсов. Опыт работы с React, Vue, Node.js и современными инструментами сборки.'
-                    },
-                    {
-                        id: 3,
-                        icon: 'fas fa-database',
-                        title: 'Базы данных',
-                        description: 'Проектирование и оптимизация реляционных и нереляционных БД. Опыт работы с PostgreSQL, MySQL, MongoDB и Redis.'
-                    },
-                    {
-                        id: 4,
-                        icon: 'fas fa-cloud',
-                        title: 'Облачные технологии',
-                        description: 'Развертывание и управление приложениями в облаке. Опыт работы с AWS, Docker, Kubernetes и CI/CD пайплайнами.'
-                    }
-                ],
-                projects: [
-                    {
-                        id: 1,
-                        icon: 'fas fa-chart-line',
-                        title: 'Аналитическая платформа',
-                        description: 'Система для анализа больших объемов данных с интерактивной визуализацией и прогнозированием.',
-                        tags: ['Python', 'Django', 'React', 'D3.js']
-                    },
-                    {
-                        id: 2,
-                        icon: 'fas fa-robot',
-                        title: 'Умный чат-бот',
-                        description: 'AI-помощник для автоматизации поддержки клиентов с интеграцией в популярные мессенджеры.',
-                        tags: ['Python', 'NLP', 'Telegram API', 'TensorFlow']
-                    },
-                    {
-                        id: 3,
-                        icon: 'fas fa-shopping-cart',
-                        title: 'E-commerce платформа',
-                        description: 'Полнофункциональный маркетплейс с системой управления заказами, платежами и аналитикой.',
-                        tags: ['React', 'Node.js', 'MongoDB', 'Stripe API']
-                    }
-                ],
-                social: [
-                    { id: 1, icon: 'fab fa-github', url: '#' },
-                    { id: 2, icon: 'fab fa-linkedin-in', url: '#' },
-                    { id: 3, icon: 'fab fa-telegram', url: '#' },
-                    { id: 4, icon: 'fab fa-twitter', url: '#' }
-                ]
-            };
-        }
-        
-        function loadRecentMessages(messages) {
-            const tbody = document.querySelector('#recent-messages tbody');
-            tbody.innerHTML = '';
-            
-            const recentMessages = messages.slice(0, 5);
-            
-            recentMessages.forEach(message => {
-                const tr = document.createElement('tr');
-                if (!message.read) tr.className = 'message-unread';
-                
-                tr.innerHTML = `
-                    <td>${message.name}</td>
-                    <td>${message.email}</td>
-                    <td>${new Date(message.date).toLocaleDateString('ru-RU')}</td>
-                    <td>
-                        <button class="btn view-message" data-id="${message.id}">Просмотр</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-            
-            // Добавляем обработчики событий для кнопок просмотра
-            document.querySelectorAll('.view-message').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const messageId = parseInt(this.getAttribute('data-id'));
-                    viewMessage(messageId);
-                });
-            });
-        }
-        
-        function loadRecentComments(comments) {
-            const tbody = document.querySelector('#recent-comments tbody');
-            tbody.innerHTML = '';
-            
-            const recentComments = comments.slice(0, 5);
-            
-            recentComments.forEach(comment => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${comment.name}</td>
-                    <td>${comment.text.length > 50 ? comment.text.substring(0, 50) + '...' : comment.text}</td>
-                    <td>${new Date(comment.date).toLocaleDateString('ru-RU')}</td>
-                    <td>
-                        <button class="btn btn-danger delete-comment" data-id="${comment.id}">Удалить</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-            
-            // Добавляем обработчики событий для кнопок удаления
-            document.querySelectorAll('.delete-comment').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const commentId = parseInt(this.getAttribute('data-id'));
-                    deleteComment(commentId);
-                });
-            });
-        }
-        
-        function loadAllMessages(messages) {
-            const tbody = document.querySelector('#messages-table tbody');
-            tbody.innerHTML = '';
-            
-            messages.forEach(message => {
-                const tr = document.createElement('tr');
-                if (!message.read) tr.className = 'message-unread';
-                
-                tr.innerHTML = `
-                    <td>${message.name}</td>
-                    <td>${message.email}</td>
-                    <td>${message.message.length > 50 ? message.message.substring(0, 50) + '...' : message.message}</td>
-                    <td>${new Date(message.date).toLocaleDateString('ru-RU')}</td>
-                    <td>
-                        <button class="btn view-message" data-id="${message.id}">Просмотр</button>
-                        <button class="btn btn-danger delete-message" data-id="${message.id}">Удалить</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-            
-            // Добавляем обработчики событий для кнопок
-            document.querySelectorAll('.view-message').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const messageId = parseInt(this.getAttribute('data-id'));
-                    viewMessage(messageId);
-                });
-            });
-            
-            document.querySelectorAll('.delete-message').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const messageId = parseInt(this.getAttribute('data-id'));
-                    deleteMessage(messageId);
-                });
-            });
-        }
-        
-        function loadAllComments(comments) {
-            const tbody = document.querySelector('#comments-table tbody');
-            tbody.innerHTML = '';
             
             comments.forEach(comment => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${comment.name}</td>
-                    <td>${comment.text.length > 50 ? comment.text.substring(0, 50) + '...' : comment.text}</td>
-                    <td>${new Date(comment.date).toLocaleDateString('ru-RU')}</td>
-                    <td>
-                        <button class="btn btn-danger delete-comment" data-id="${comment.id}">Удалить</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-            
-            // Добавляем обработчики событий для кнопок удаления
-            document.querySelectorAll('.delete-comment').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const commentId = parseInt(this.getAttribute('data-id'));
-                    deleteComment(commentId);
-                });
-            });
-        }
-        
-        function loadHeroData(hero) {
-            document.getElementById('hero-name').value = hero.name;
-            document.getElementById('hero-profession').value = hero.profession;
-            document.getElementById('hero-description').value = hero.description;
-        }
-        
-        function loadContactData(contact) {
-            document.getElementById('contact-email').value = contact.email;
-            document.getElementById('contact-phone').value = contact.phone;
-            document.getElementById('contact-address').value = contact.address;
-        }
-        
-        function loadSkillsData(skills) {
-            const container = document.getElementById('skills-list');
-            container.innerHTML = '';
-            
-            skills.forEach(skill => {
-                const skillItem = document.createElement('div');
-                skillItem.className = 'skill-item';
-                skillItem.innerHTML = `
-                    <div class="item-header">
-                        <h3>${skill.title}</h3>
-                        <div class="item-actions">
-                            <button class="btn edit-skill" data-id="${skill.id}">Редактировать</button>
-                            <button class="btn btn-danger delete-skill" data-id="${skill.id}">Удалить</button>
-                        </div>
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment';
+                commentElement.innerHTML = `
+                    <div class="comment-header">
+                        <span class="comment-author">${comment.name}</span>
+                        <span class="comment-date">${new Date(comment.date).toLocaleDateString('ru-RU')}</span>
                     </div>
-                    <p><strong>Иконка:</strong> ${skill.icon}</p>
-                    <p>${skill.description}</p>
+                    <div class="comment-text">${comment.text}</div>
                 `;
-                container.appendChild(skillItem);
-            });
-            
-            // Добавляем обработчики событий
-            document.querySelectorAll('.edit-skill').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const skillId = parseInt(this.getAttribute('data-id'));
-                    editSkill(skillId);
-                });
-            });
-            
-            document.querySelectorAll('.delete-skill').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const skillId = parseInt(this.getAttribute('data-id'));
-                    deleteSkill(skillId);
-                });
+                commentsList.appendChild(commentElement);
             });
         }
         
-        function loadProjectsData(projects) {
-            const container = document.getElementById('projects-list');
-            container.innerHTML = '';
-            
-            projects.forEach(project => {
-                const projectItem = document.createElement('div');
-                projectItem.className = 'project-item';
-                projectItem.innerHTML = `
-                    <div class="item-header">
-                        <h3>${project.title}</h3>
-                        <div class="item-actions">
-                            <button class="btn edit-project" data-id="${project.id}">Редактировать</button>
-                            <button class="btn btn-danger delete-project" data-id="${project.id}">Удалить</button>
-                        </div>
-                    </div>
-                    <p><strong>Иконка:</strong> ${project.icon}</p>
-                    <p>${project.description}</p>
-                    <p><strong>Теги:</strong> ${project.tags.join(', ')}</p>
-                `;
-                container.appendChild(projectItem);
-            });
-            
-            // Добавляем обработчики событий
-            document.querySelectorAll('.edit-project').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const projectId = parseInt(this.getAttribute('data-id'));
-                    editProject(projectId);
-                });
-            });
-            
-            document.querySelectorAll('.delete-project').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const projectId = parseInt(this.getAttribute('data-id'));
-                    deleteProject(projectId);
-                });
-            });
-        }
-        
-        function loadSocialData(social) {
-            const container = document.getElementById('social-list');
-            container.innerHTML = '';
-            
-            social.forEach(item => {
-                const socialItem = document.createElement('div');
-                socialItem.className = 'skill-item';
-                socialItem.innerHTML = `
-                    <div class="item-header">
-                        <h3><i class="${item.icon}"></i> ${item.icon.split('-')[1]}</h3>
-                        <div class="item-actions">
-                            <button class="btn edit-social" data-id="${item.id}">Редактировать</button>
-                            <button class="btn btn-danger delete-social" data-id="${item.id}">Удалить</button>
-                        </div>
-                    </div>
-                    <p><strong>URL:</strong> ${item.url}</p>
-                `;
-                container.appendChild(socialItem);
-            });
-            
-            // Добавляем обработчики событий
-            document.querySelectorAll('.edit-social').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const socialId = parseInt(this.getAttribute('data-id'));
-                    editSocial(socialId);
-                });
-            });
-            
-            document.querySelectorAll('.delete-social').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const socialId = parseInt(this.getAttribute('data-id'));
-                    deleteSocial(socialId);
-                });
-            });
-        }
-        
-        function viewMessage(messageId) {
-            const messages = JSON.parse(localStorage.getItem('portfolioMessages')) || [];
-            const message = messages.find(m => m.id === messageId);
-            
-            if (message) {
-                // Помечаем как прочитанное
-                message.read = true;
-                localStorage.setItem('portfolioMessages', JSON.stringify(messages));
-                
-                // Показываем содержимое сообщения
-                alert(`Сообщение от: ${message.name}\nEmail: ${message.email}\nДата: ${new Date(message.date).toLocaleString('ru-RU')}\n\nСообщение:\n${message.message}`);
-                
-                // Обновляем данные
-                loadAdminData();
-            }
-        }
-        
-        function deleteMessage(messageId) {
-            if (confirm('Вы уверены, что хотите удалить это сообщение?')) {
-                let messages = JSON.parse(localStorage.getItem('portfolioMessages')) || [];
-                messages = messages.filter(m => m.id !== messageId);
-                localStorage.setItem('portfolioMessages', JSON.stringify(messages));
-                loadAdminData();
-                showNotification('Сообщение удалено', 'success');
-            }
-        }
-        
-        function deleteComment(commentId) {
-            if (confirm('Вы уверены, что хотите удалить этот комментарий?')) {
-                let comments = JSON.parse(localStorage.getItem('portfolioComments')) || [];
-                comments = comments.filter(c => c.id !== commentId);
-                localStorage.setItem('portfolioComments', JSON.stringify(comments));
-                loadAdminData();
-                showNotification('Комментарий удален', 'success');
-            }
-        }
-        
-        function deleteSkill(skillId) {
-            if (confirm('Вы уверены, что хотите удалить этот навык?')) {
-                const siteData = JSON.parse(localStorage.getItem('portfolioSiteData'));
-                siteData.skills = siteData.skills.filter(s => s.id !== skillId);
-                localStorage.setItem('portfolioSiteData', JSON.stringify(siteData));
-                loadAdminData();
-                showNotification('Навык удален', 'success');
-            }
-        }
-        
-        function deleteProject(projectId) {
-            if (confirm('Вы уверены, что хотите удалить этот проект?')) {
-                const siteData = JSON.parse(localStorage.getItem('portfolioSiteData'));
-                siteData.projects = siteData.projects.filter(p => p.id !== projectId);
-                localStorage.setItem('portfolioSiteData', JSON.stringify(siteData));
-                loadAdminData();
-                showNotification('Проект удален', 'success');
-            }
-        }
-        
-        function deleteSocial(socialId) {
-            if (confirm('Вы уверены, что хотите удалить эту социальную сеть?')) {
-                const siteData = JSON.parse(localStorage.getItem('portfolioSiteData'));
-                siteData.social = siteData.social.filter(s => s.id !== socialId);
-                localStorage.setItem('portfolioSiteData', JSON.stringify(siteData));
-                loadAdminData();
-                showNotification('Социальная сеть удалена', 'success');
-            }
-        }
-        
-        function editSkill(skillId) {
-            const siteData = JSON.parse(localStorage.getItem('portfolioSiteData'));
-            const skill = siteData.skills.find(s => s.id === skillId);
-            
-            if (skill) {
-                const newTitle = prompt('Новое название навыка:', skill.title);
-                if (newTitle !== null) {
-                    const newIcon = prompt('Новая иконка (FontAwesome класс):', skill.icon);
-                    if (newIcon !== null) {
-                        const newDescription = prompt('Новое описание:', skill.description);
-                        if (newDescription !== null) {
-                            skill.title = newTitle;
-                            skill.icon = newIcon;
-                            skill.description = newDescription;
-                            
-                            localStorage.setItem('portfolioSiteData', JSON.stringify(siteData));
-                            loadAdminData();
-                            showNotification('Навык обновлен', 'success');
-                        }
-                    }
-                }
-            }
-        }
-        
-        function editProject(projectId) {
-            const siteData = JSON.parse(localStorage.getItem('portfolioSiteData'));
-            const project = siteData.projects.find(p => p.id === projectId);
-            
-            if (project) {
-                const newTitle = prompt('Новое название проекта:', project.title);
-                if (newTitle !== null) {
-                    const newIcon = prompt('Новая иконка (FontAwesome класс):', project.icon);
-                    if (newIcon !== null) {
-                        const newDescription = prompt('Новое описание:', project.description);
-                        if (newDescription !== null) {
-                            const newTags = prompt('Новые теги (через запятую):', project.tags.join(', '));
-                            if (newTags !== null) {
-                                project.title = newTitle;
-                                project.icon = newIcon;
-                                project.description = newDescription;
-                                project.tags = newTags.split(',').map(tag => tag.trim());
-                                
-                                localStorage.setItem('portfolioSiteData', JSON.stringify(siteData));
-                                loadAdminData();
-                                showNotification('Проект обновлен', 'success');
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        
-        function editSocial(socialId) {
-            const siteData = JSON.parse(localStorage.getItem('portfolioSiteData'));
-            const social = siteData.social.find(s => s.id === socialId);
-            
-            if (social) {
-                const newIcon = prompt('Новая иконка (FontAwesome класс):', social.icon);
-                if (newIcon !== null) {
-                    const newUrl = prompt('Новый URL:', social.url);
-                    if (newUrl !== null) {
-                        social.icon = newIcon;
-                        social.url = newUrl;
-                        
-                        localStorage.setItem('portfolioSiteData', JSON.stringify(siteData));
-                        loadAdminData();
-                        showNotification('Социальная сеть обновлена', 'success');
-                    }
-                }
-            }
-        }
-        
-        // Обработчики форм
-        document.getElementById('hero-form').addEventListener('submit', function(e) {
+
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const siteData = JSON.parse(localStorage.getItem('portfolioSiteData'));
-            siteData.hero.name = document.getElementById('hero-name').value;
-            siteData.hero.profession = document.getElementById('hero-profession').value;
-            siteData.hero.description = document.getElementById('hero-description').value;
+            const formData = new FormData(this);
+            const name = formData.get('name').trim();
+            const text = formData.get('text').trim();
             
-            localStorage.setItem('portfolioSiteData', JSON.stringify(siteData));
-            showNotification('Герой-секция обновлена', 'success');
+            if (!name || !text) {
+                showNotification('Пожалуйста, заполните все поля', 'error');
+                return;
+            }
+            
+            const newComment = {
+                id: Date.now(),
+                name: name,
+                text: text,
+                date: new Date().toISOString()
+            };
+            
+            comments.unshift(newComment);
+            localStorage.setItem('portfolioComments', JSON.stringify(comments));
+            
+            displayComments();
+            this.reset();
+            showNotification('Ваш комментарий успешно добавлен!', 'success');
         });
         
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const siteData = JSON.parse(localStorage.getItem('portfolioSiteData'));
-            siteData.contact.email = document.getElementById('contact-email').value;
-            siteData.contact.phone = document.getElementById('contact-phone').value;
-            siteData.contact.address = document.getElementById('contact-address').value;
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
             
-            localStorage.setItem('portfolioSiteData', JSON.stringify(siteData));
-            showNotification('Контактная информация обновлена', 'success');
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Отправка.';
+            submitBtn.disabled = true;
+            
+
+            setTimeout(() => {
+                showNotification('одийте ответа', 'success');
+                this.reset();
+                
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 1500);
         });
         
-        // Добавление новых элементов
-        document.getElementById('add-skill').addEventListener('click', function() {
-            const siteData = JSON.parse(localStorage.getItem('portfolioSiteData'));
-            const newId = Math.max(...siteData.skills.map(s => s.id), 0) + 1;
-            
-            const title = prompt('Название навыка:');
-            if (title) {
-                const icon = prompt('Иконка (FontAwesome класс):', 'fas fa-code');
-                if (icon) {
-                    const description = prompt('Описание:');
-                    if (description) {
-                        siteData.skills.push({
-                            id: newId,
-                            icon: icon,
-                            title: title,
-                            description: description
-                        });
-                        
-                        localStorage.setItem('portfolioSiteData', JSON.stringify(siteData));
-                        loadAdminData();
-                        showNotification('Навык добавлен', 'success');
-                    }
-                }
-            }
-        });
-        
-        document.getElementById('add-project').addEventListener('click', function() {
-            const siteData = JSON.parse(localStorage.getItem('portfolioSiteData'));
-            const newId = Math.max(...siteData.projects.map(p => p.id), 0) + 1;
-            
-            const title = prompt('Название проекта:');
-            if (title) {
-                const icon = prompt('Иконка (FontAwesome класс):', 'fas fa-project-diagram');
-                if (icon) {
-                    const description = prompt('Описание:');
-                    if (description) {
-                        const tags = prompt('Теги (через запятую):');
-                        if (tags) {
-                            siteData.projects.push({
-                                id: newId,
-                                icon: icon,
-                                title: title,
-                                description: description,
-                                tags: tags.split(',').map(tag => tag.trim())
-                            });
-                            
-                            localStorage.setItem('portfolioSiteData', JSON.stringify(siteData));
-                            loadAdminData();
-                            showNotification('Проект добавлен', 'success');
-                        }
-                    }
-                }
-            }
-        });
-        
-        document.getElementById('add-social').addEventListener('click', function() {
-            const siteData = JSON.parse(localStorage.getItem('portfolioSiteData'));
-            const newId = Math.max(...siteData.social.map(s => s.id), 0) + 1;
-            
-            const icon = prompt('Иконка (FontAwesome класс):', 'fab fa-example');
-            if (icon) {
-                const url = prompt('URL:');
-                if (url) {
-                    siteData.social.push({
-                        id: newId,
-                        icon: icon,
-                        url: url
-                    });
-                    
-                    localStorage.setItem('portfolioSiteData', JSON.stringify(siteData));
-                    loadAdminData();
-                    showNotification('Социальная сеть добавлена', 'success');
-                }
-            }
-        });
-        
-        // Функция показа уведомлений
+
         function showNotification(message, type) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -1166,36 +883,12 @@
             
             setTimeout(() => {
                 notification.className = 'notification';
-            }, 3000);
+            }, 5000);
         }
         
-        // Переключение между вкладками
-        document.querySelectorAll('.sidebar a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Убираем активный класс у всех ссылок
-                document.querySelectorAll('.sidebar a').forEach(a => {
-                    a.classList.remove('active');
-                });
-                
-                // Добавляем активный класс к текущей ссылке
-                this.classList.add('active');
-                
-                // Скрываем все вкладки
-                document.querySelectorAll('.tab-content').forEach(tab => {
-                    tab.classList.remove('active');
-                });
-                
-                // Показываем выбранную вкладку
-                const tabId = this.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-        
-        // Инициализация при загрузке страницы
+
         document.addEventListener('DOMContentLoaded', function() {
-            loadAdminData();
+            displayComments();
         });
     </script>
 </body>
